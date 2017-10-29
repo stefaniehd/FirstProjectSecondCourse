@@ -5,20 +5,28 @@
  */
 package Model;
 
+import Util.FileManager;
+import java.util.LinkedList;
+
 /**
  *
  * @author pc
  */
 public class User {
-    
+
     private String id;
     private String code;
     private String name;
     private String email;
     private String password;
     private String userName;
+    private String type;
+    private FileManager fileManager;
+    private String fileName;
 
     public User() {
+        fileManager = new FileManager();
+        fileName = "user.txt";
     }
 
     public String getId() {
@@ -67,5 +75,104 @@ public class User {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public boolean add() {
+        try {
+            String user = fileManager.read(fileName);
+            if (user.length() > 0) {
+                user += "\n";
+            }
+            user += this.getCode() + ";" + this.getName() + ";" + this.getCode() + ";" + this.getPassword()
+                    + ";" + this.getEmail()+";"+ this.getType();
+            this.fileManager.write(fileName, user);
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean delete() {
+        try {
+            String newUser = "";
+            String[] user = fileManager.read(fileName).split("\n");
+            for (int i = 0; i < user.length; i++) {
+                String userData[] = user[i].split(";");
+                if (!(userData[2].equals(this.getId()))) {
+                    newUser += userData[i];
+                }
+                if (i != (user.length - 1)) {
+                    newUser += "\n";
+                }
+            }
+            fileManager.write(fileName, newUser);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     *
+     * @return
+     */
+    public LinkedList<User> select() {
+        try {
+            String[] user = fileManager.read(fileName).split("\n");
+            LinkedList<Model.User> userList = new LinkedList<>();
+            for (int i = 0; i < user.length; i++) {
+                String[] userData = user[i].split(";");
+                Model.User p = new User();
+                p.setCode(userData[0]);
+                p.setName(userData[1]);
+                p.setId(userData[2]);
+                p.setPassword(userData[3]);
+                p.setEmail(userData[4]);
+                p.setType(userData[5]);
+                userList.add(p);
+            }
+            return userList;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean update() {
+        try {
+            String newUser = "";
+            String[] user = fileManager.read(fileName).split("\n");
+            for (int i = 0; i < user.length; i++) {
+                String userData[] = user[i].split(";");
+                if (!(userData[0].equals(this.getId()))) {
+                    newUser += userData[i];
+                    if (i != (user.length - 1)) {
+                        newUser += "\n";
+                    }
+                } else {
+                    newUser +=  this.getCode() + ";" + this.getName() + ";" + this.getCode() + ";" + this.getPassword()
+                    + ";" + this.getEmail()+";"+ this.getType();
+                }
+            }
+            fileManager.write(fileName, newUser);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
