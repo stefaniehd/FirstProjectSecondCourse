@@ -9,8 +9,8 @@ package Controller;
  *
  * @author pc
  */
-public class Purchase {
-    
-    public Purchase() {
+public class Movie extends Disc{
+
+    public Movie() {
     }
 }

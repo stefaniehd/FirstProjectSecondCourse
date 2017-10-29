@@ -9,8 +9,8 @@ package Controller;
  *
  * @author pc
  */
-public class Purchase {
+public class Disc {
     
-    public Purchase() {
+    public Disc() {
     }
 }

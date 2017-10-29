@@ -5,12 +5,14 @@
  */
 package Controller;
 
+import java.util.LinkedList;
+
 /**
  *
  * @author pc
  */
-public class Purchase {
-    
-    public Purchase() {
+public class Music extends Disc{
+
+    public Music() {
     }
 }
