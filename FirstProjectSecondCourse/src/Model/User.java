@@ -92,7 +92,7 @@ public class User {
                 user += "\n";
             }
             user += this.getCode() + ";" + this.getName() + ";" + this.getCode() + ";" + this.getPassword()
-                    + ";" + this.getEmail()+";"+ this.getType();
+                    + ";" + this.getEmail()+";"+ this.getType() + ";" + this.getUserName();
             this.fileManager.write(fileName, user);
             return true;
         } catch (Exception ex) {
@@ -141,6 +141,7 @@ public class User {
                 p.setPassword(userData[3]);
                 p.setEmail(userData[4]);
                 p.setType(userData[5]);
+                p.setUserName(userData[6]);
                 userList.add(p);
             }
             return userList;
@@ -174,5 +175,17 @@ public class User {
         } catch (Exception e) {
             return false;
         }
+    }
+    
+    public Model.User verifyLogin(String user, String password){
+        LinkedList<Model.User> users = select();
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getUserName().equals(user)||users.get(i).getEmail().equals(user)) {
+                if (users.get(i).getPassword().equals(password)) {
+                    return users.get(i);
+                }
+            }
+        }
+        return null;
     }
 }
