@@ -5,50 +5,119 @@
  */
 package Model;
 
+import Util.FileManager;
 import java.util.LinkedList;
 
 /**
  *
  * @author pc
  */
-public class Movie extends Disc{
+public class Movie extends Model.Disc {
+
+    private final FileManager fileManager;
+    private final String fileName;
 
     public Movie() {
+        fileManager = new FileManager();
+        fileName = "disc.txt";
     }
-    
+
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     @Override
     public boolean add() {
-        return super.add(); //To change body of generated methods, choose Tools | Templates.
+        try {
+            String movies = fileManager.read(fileName);
+            if (movies.length() > 0) {
+                movies += "\n";
+            }
+            movies += this.getId() + ";" + this.getName() + ";" + this.getAutor() + ";"
+                    + this.getCategory() + ";" + this.getPrice() + ";" + this.getCant()+";"+ this.getType();;
+            this.fileManager.write(fileName, movies);
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     @Override
     public boolean delete() {
-        return super.delete(); //To change body of generated methods, choose Tools | Templates.
+        try {
+            String newMovies = "";
+            String[] movies = fileManager.read(fileName).split("\n");
+            for (int i = 0; i < movies.length; i++) {
+                String movieData[] = movies[i].split(";");
+                if (!(movieData[0].equals(this.getId()))) {
+                    newMovies += movieData[i];
+                }
+                if (i != (movies.length - 1)) {
+                    newMovies += "\n";
+                }
+            }
+            fileManager.write(fileName, newMovies);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     @Override
-    public LinkedList<Disc> select() {
-        return super.select(); //To change body of generated methods, choose Tools | Templates.
+    public LinkedList<Model.Disc> select() {
+        try {
+            String[] movies = fileManager.read(fileName).split("\n");
+            LinkedList<Model.Disc> movieList = new LinkedList<>();
+            for (int i = 0; i < movies.length; i++) {
+                String[] moviesData = movies[i].split(";");
+                Model.Movie m = new Movie();
+                m.setId(moviesData[0]);
+                m.setName(moviesData[1]);
+                m.setAutor(moviesData[2]);
+                m.setCategory(moviesData[3]);
+                m.setPrice(Integer.parseInt(moviesData[4]));
+                m.setCant(Integer.parseInt(moviesData[5]));
+                movieList.add(m);
+            }
+            return movieList;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     @Override
     public boolean update() {
-        return super.update(); //To change body of generated methods, choose Tools | Templates.
+        try {
+            String newMovies = "";
+            String[] movies = fileManager.read(fileName).split("\n");
+            for (int i = 0; i < movies.length; i++) {
+                String movieData[] = movies[i].split(";");
+                if (!(movieData[0].equals(this.getId()))) {
+                    newMovies += movieData[i];
+                    if (i != (movies.length - 1)) {
+                        newMovies += "\n";
+                    }
+                } else {
+                    newMovies += this.getId() + ";" + this.getName() + ";" + this.getAutor() + ";"
+                            + this.getCategory() + ";" + this.getPrice() + ";" + this.getCant()+";"+ this.getType();;
+                }
+            }
+            fileManager.write(fileName, newMovies);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

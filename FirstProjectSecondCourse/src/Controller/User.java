@@ -16,6 +16,7 @@ public class User {
     private Model.User oUser;
 
     public User() {
+        oUser = new Model.User();
     }
 
     public User(Model.User oUser) {
@@ -36,5 +37,9 @@ public class User {
 
     public boolean delete() {
         return oUser.delete();
+    }
+    
+    public Model.User verifyLogin(String user, String password){
+        return oUser.verifyLogin(user, password);
     }
 }

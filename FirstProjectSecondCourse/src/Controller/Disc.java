@@ -5,6 +5,8 @@
  */
 package Controller;
 
+import java.util.LinkedList;
+
 /**
  *
  * @author pc
@@ -12,5 +14,21 @@ package Controller;
 public class Disc {
     
     public Disc() {
+    }
+    
+    public boolean add(){
+        return true;
+    }
+    
+    public boolean update(){
+        return true;
+    }
+    
+    public LinkedList<Model.Disc> select(){
+        return new LinkedList<>();
+    }
+    
+    public boolean delete(){
+        return true;
     }
 }

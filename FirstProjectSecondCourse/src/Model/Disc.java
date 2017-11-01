@@ -13,12 +13,13 @@ import java.util.LinkedList;
  */
 public class Disc {
 
+    private String type;
     private String id;
     private String name;
     private String autor;
     private String category;
     private double price;
-    private int cantidad;
+    private int cant;
     
     public Disc() {
     }
@@ -95,11 +96,21 @@ public class Disc {
         this.price = price;
     }
 
-    public int getCantidad() {
-        return cantidad;
+    public String getType() {
+        return type;
     }
 
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
+    public void setType(String type) {
+        this.type = type;
     }
+
+    public int getCant() {
+        return cant;
+    }
+
+    public void setCant(int cant) {
+        this.cant = cant;
+    }
+    
+    
 }
