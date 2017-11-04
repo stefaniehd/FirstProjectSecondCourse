@@ -5,8 +5,11 @@
  */
 package View;
 
+import Controller.Movie;
 import java.awt.Image;
+import java.util.LinkedList;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 /**
  *
@@ -14,13 +17,22 @@ import javax.swing.ImageIcon;
  */
 public class FrmMain extends javax.swing.JFrame {
 
+    private Model.User loguedUser;
+
     /**
      * Creates new form FrmMain
      */
     public FrmMain() {
         initComponents();
         setLocationRelativeTo(null);
-        hide(false);
+        loguedUser = null;
+        load();
+    }
+
+    public FrmMain(Model.User user) {
+        initComponents();
+        setLocationRelativeTo(null);
+        loguedUser = user;
         load();
     }
 
@@ -30,16 +42,7 @@ public class FrmMain extends javax.swing.JFrame {
         Image newimg = img.getScaledInstance(lblShoppingCar.getWidth(), lblShoppingCar.getHeight(), java.awt.Image.SCALE_SMOOTH);
         icon = new ImageIcon(newimg);
         lblShoppingCar.setIcon(icon);
-    }
-
-    private void hide(boolean action) {
-        btnBought.setVisible(action);
-        btnDate.setVisible(action);
-        btnSold.setVisible(action);
-    }
-
-    private void start() {
-
+        viewMovies();
     }
 
     /**
@@ -83,12 +86,6 @@ public class FrmMain extends javax.swing.JFrame {
         lblNam4 = new javax.swing.JLabel();
         btnMovies = new javax.swing.JToggleButton();
         btnMusic = new javax.swing.JToggleButton();
-        jPanel3 = new javax.swing.JPanel();
-        btnBought = new javax.swing.JToggleButton();
-        btnDate = new javax.swing.JToggleButton();
-        btnSold = new javax.swing.JToggleButton();
-        jLabel2 = new javax.swing.JLabel();
-        btnAll = new javax.swing.JToggleButton();
         jLabel3 = new javax.swing.JLabel();
         lblShoppingCar = new javax.swing.JLabel();
 
@@ -239,9 +236,10 @@ public class FrmMain extends javax.swing.JFrame {
                 .addGroup(pResultLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(lblDisc1, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblDisc2, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
-                    .addComponent(lblDisc3, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
-                    .addComponent(lblDisc4, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
-                    .addComponent(lblDisc5, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE))
+                    .addGroup(pResultLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblDisc3, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
+                        .addComponent(lblDisc4, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
+                        .addComponent(lblDisc5, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pResultLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblName2, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -313,66 +311,6 @@ public class FrmMain extends javax.swing.JFrame {
             }
         });
 
-        jPanel3.setBackground(new java.awt.Color(0, 153, 153));
-        jPanel3.setForeground(new java.awt.Color(0, 153, 153));
-
-        btnBought.setBackground(new java.awt.Color(204, 102, 0));
-        buttonGroup2.add(btnBought);
-        btnBought.setFont(new java.awt.Font("Comic Sans MS", 1, 13)); // NOI18N
-        btnBought.setForeground(new java.awt.Color(255, 255, 255));
-        btnBought.setText("+ Bought ");
-
-        btnDate.setBackground(new java.awt.Color(204, 102, 0));
-        buttonGroup2.add(btnDate);
-        btnDate.setFont(new java.awt.Font("Comic Sans MS", 1, 13)); // NOI18N
-        btnDate.setForeground(new java.awt.Color(255, 255, 255));
-        btnDate.setText("By date");
-
-        btnSold.setBackground(new java.awt.Color(204, 102, 0));
-        buttonGroup2.add(btnSold);
-        btnSold.setFont(new java.awt.Font("Comic Sans MS", 1, 13)); // NOI18N
-        btnSold.setForeground(new java.awt.Color(255, 255, 255));
-        btnSold.setText("+/- Sold");
-
-        jLabel2.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel2.setText("jLabel2");
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(btnSold, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnDate, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnBought, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
-                .addContainerGap(13, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.CENTER, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                .addComponent(btnBought, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(javax.swing.GroupLayout.Alignment.CENTER, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                .addComponent(btnDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnSold, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        btnAll.setBackground(new java.awt.Color(204, 102, 0));
-        buttonGroup1.add(btnAll);
-        btnAll.setFont(new java.awt.Font("Comic Sans MS", 1, 13)); // NOI18N
-        btnAll.setForeground(new java.awt.Color(255, 255, 255));
-        btnAll.setText("All");
-        btnAll.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAllActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -385,34 +323,32 @@ public class FrmMain extends javax.swing.JFrame {
                         .addComponent(btnMovies, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnMusic, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnAll, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(9, 9, 9)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(btnMovies, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnMusic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(19, 19, 19)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btnMovies, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnLogin)
+                        .addComponent(btnMusic, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
+
+        lblShoppingCar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblShoppingCarMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -454,22 +390,23 @@ public class FrmMain extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMoviesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoviesActionPerformed
-        hide(true);
+
     }//GEN-LAST:event_btnMoviesActionPerformed
 
     private void btnMusicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMusicActionPerformed
-        hide(true);
+
     }//GEN-LAST:event_btnMusicActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         FrmLogin oLogin = new FrmLogin(this, true);
         oLogin.setVisible(true);
-        start();
+        this.dispose();
     }//GEN-LAST:event_btnLoginActionPerformed
 
-    private void btnAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAllActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAllActionPerformed
+    private void lblShoppingCarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblShoppingCarMouseClicked
+        FrmMyWishes oMyWishes = new FrmMyWishes(this, true);
+        oMyWishes.setVisible(true);
+    }//GEN-LAST:event_lblShoppingCarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -507,21 +444,15 @@ public class FrmMain extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToggleButton btnAll;
-    private javax.swing.JToggleButton btnBought;
-    private javax.swing.JToggleButton btnDate;
     private javax.swing.JButton btnLogin;
     private javax.swing.JToggleButton btnMovies;
     private javax.swing.JToggleButton btnMusic;
-    private javax.swing.JToggleButton btnSold;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel lblDisc0;
     private javax.swing.JLabel lblDisc1;
     private javax.swing.JLabel lblDisc2;
@@ -548,4 +479,73 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JPanel pMain;
     private javax.swing.JPanel pResult;
     // End of variables declaration//GEN-END:variables
+
+    private void viewMovies() {
+        Controller.Movie m = new Movie();
+        LinkedList<Model.Disc> dMovies = m.select();
+        for (int i = 0; i < 9; i++) {
+            JLabel l = getDisc(i+1);
+            l.setIcon(setImage("", WIDTH, HEIGHT));
+        }
+    }
+
+    private JLabel getDisc(int num) {
+        switch (num) {
+            case 9:
+                return this.lblDisc0;
+            case 1:
+                return this.lblDisc1;
+            case 2:
+                return this.lblDisc2;
+            case 3:
+                return this.lblDisc3;
+            case 4:
+                return this.lblDisc4;
+            case 5:
+                return this.lblDisc5;
+            case 6:
+                return this.lblDisc6;
+            case 7:
+                return this.lblDisc7;
+            case 8:
+                return this.lblDisc8;
+            case 0:
+                return this.lblDisc9;
+        }
+        return null;
+    }
+    
+    private JLabel getNameLabel(int num){
+        switch (num) {
+            case 9:
+                return this.lblName0;
+            case 1:
+                return this.lblName1;
+            case 2:
+                return this.lblName2;
+            case 3:
+                return this.lblName3;
+            case 4:
+                return this.lblNam4;
+            case 5:
+                return this.lblName5;
+            case 6:
+                return this.lblName6;
+            case 7:
+                return this.lblName7;
+            case 8:
+                return this.lblName8;
+            case 0:
+                return this.lblName9;
+        }
+        return null;
+    }
+
+    private ImageIcon setImage(String url, int width, int height) {
+        ImageIcon icon = new ImageIcon(url);
+        Image img = icon.getImage();
+        Image newimg = img.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
+        icon = new ImageIcon(newimg);
+        return icon;
+    }
 }
