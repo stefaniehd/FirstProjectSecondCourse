@@ -101,6 +101,11 @@ public class FrmLogin extends javax.swing.JDialog {
         jLabel4.setForeground(new java.awt.Color(0, 102, 51));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel4.setText("Create an account?");
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Comic Sans MS", 1, 11)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 102, 51));
@@ -178,6 +183,11 @@ public class FrmLogin extends javax.swing.JDialog {
     private void btnDoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoneActionPerformed
         verify();
     }//GEN-LAST:event_btnDoneActionPerformed
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        FrmNewAccount oNewAccount = new FrmNewAccount(null, true);
+        oNewAccount.setVisible(true);
+    }//GEN-LAST:event_jLabel4MouseClicked
 
     /**
      * @param args the command line arguments
