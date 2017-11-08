@@ -88,11 +88,8 @@ public class User {
     public boolean add() {
         try {
             String user = fileManager.read(fileName);
-            if (user.length() > 0) {
-                user += "\n";
-            }
             user += this.getCode() + ";" + this.getName() + ";" + this.getCode() + ";" + this.getPassword()
-                    + ";" + this.getEmail()+";"+ this.getType() + ";" + this.getUserName();
+                    + ";" + this.getEmail()+ ";" + this.getType() + ";" + this.getUserName();
             this.fileManager.write(fileName, user);
             return true;
         } catch (Exception ex) {
@@ -111,7 +108,7 @@ public class User {
             for (int i = 0; i < user.length; i++) {
                 String userData[] = user[i].split(";");
                 if (!(userData[2].equals(this.getId()))) {
-                    newUser += userData[i];
+                    newUser += user[i];
                 }
                 if (i != (user.length - 1)) {
                     newUser += "\n";
@@ -161,7 +158,7 @@ public class User {
             for (int i = 0; i < user.length; i++) {
                 String userData[] = user[i].split(";");
                 if (!(userData[0].equals(this.getId()))) {
-                    newUser += userData[i];
+                    newUser += user[i];
                     if (i != (user.length - 1)) {
                         newUser += "\n";
                     }
