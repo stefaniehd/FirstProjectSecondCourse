@@ -16,6 +16,7 @@ public class Music extends Disc{
     private Model.Music oMusic;
 
     public Music() {
+        oMusic = new Model.Music();
     }
 
     public Music(Model.Music oMusic) {
