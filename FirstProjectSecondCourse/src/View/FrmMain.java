@@ -428,7 +428,7 @@ public class FrmMain extends javax.swing.JFrame {
     private void lblPreviusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPreviusMouseClicked
         minActual = maxActual-10;
         maxActual = maxActual-10;
-        if (btnMusic.is) {
+        if (btnMusic.isSelected()) {
             viewMusic();
         }else{
             viewMovies();
