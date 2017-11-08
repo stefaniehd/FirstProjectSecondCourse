@@ -5,6 +5,7 @@
  */
 package View;
 
+import Model.User;
 import static Util.Code.getCode;
 
 /**
@@ -107,7 +108,7 @@ public class FrmNewAccount extends javax.swing.JDialog {
 
         Code.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         Code.setForeground(new java.awt.Color(255, 102, 0));
-        Code.setText("Type");
+        Code.setText("Code");
 
         txtCode.setEditable(false);
         txtCode.setFont(new java.awt.Font("Comic Sans MS", 1, 13)); // NOI18N
@@ -184,9 +185,7 @@ public class FrmNewAccount extends javax.swing.JDialog {
                                 .addGap(22, 22, 22)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btnSave, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel7)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jLabel7)
                                     .addComponent(txtVerPassword))))
                         .addGap(64, 64, 64))))
         );
@@ -249,7 +248,7 @@ public class FrmNewAccount extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        
+        save();
     }//GEN-LAST:event_btnSaveActionPerformed
 
     /**
@@ -314,4 +313,21 @@ public class FrmNewAccount extends javax.swing.JDialog {
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JPasswordField txtVerPassword;
     // End of variables declaration//GEN-END:variables
+
+    private void save() {
+        Model.User u = new User();
+        String pass = txtPassword.getText().trim();
+        String passVer = txtVerPassword.getText().trim();
+        if (pass.equals(passVer)) {
+            u.setPassword(passVer);
+            u.setCode(txtCode.getText());
+            u.setEmail(txtEmail.getText());
+            u.setId(txtId.getText());
+            u.setName(txtName.getText());
+            u.setType("user");
+            u.setUserName(txtLastName.getText());
+            Controller.User user = new Controller.User(u);
+            user.add();
+        }
+    }
 }
