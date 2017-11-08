@@ -18,6 +18,9 @@ import javax.swing.JLabel;
 public class FrmMain extends javax.swing.JFrame {
 
     private Model.User loguedUser;
+    private int minActual;
+    private int maxActual;
+    private LinkedList<Model.Disc> actualDiscs;
 
     /**
      * Creates new form FrmMain
@@ -26,6 +29,8 @@ public class FrmMain extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         loguedUser = null;
+        minActual = 0;
+        actualDiscs = new LinkedList<>();
         load();
     }
 
@@ -33,16 +38,23 @@ public class FrmMain extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         loguedUser = user;
+        maxActual = 9;
+        actualDiscs = new LinkedList<>();
         load();
     }
 
     private void load() {
-        ImageIcon icon = new ImageIcon("C:\\Users\\pc\\Desktop\\FirstProjectSecondCourse\\FirstProjectSecondCourse\\src\\images\\shopping_car.png");
-        Image img = icon.getImage();
-        Image newimg = img.getScaledInstance(lblShoppingCar.getWidth(), lblShoppingCar.getHeight(), java.awt.Image.SCALE_SMOOTH);
-        icon = new ImageIcon(newimg);
-        lblShoppingCar.setIcon(icon);
-        viewMovies();
+        try {
+            try {
+                lblWelcome.setText("Welcome back " + loguedUser.getName());
+                btnLogin.setText("Log out");
+            } catch (Exception e) {
+            }
+            String url = "C:\\Users\\pc\\Desktop\\FirstProjectSecondCourse\\FirstProjectSecondCourse\\src\\images\\shopping_car.png";
+            lblShoppingCar.setIcon(setImage(url, lblShoppingCar.getWidth(), lblShoppingCar.getHeight()));
+            viewMovies();
+        } catch (Exception e) {
+        }
     }
 
     /**
@@ -57,7 +69,7 @@ public class FrmMain extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup2 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        lblWelcome = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         btnLogin = new javax.swing.JButton();
         pMain = new javax.swing.JPanel();
@@ -94,10 +106,10 @@ public class FrmMain extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(0, 102, 102));
 
-        jLabel1.setFont(new java.awt.Font("Comic Sans MS", 1, 20)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Disc Stock");
+        lblWelcome.setFont(new java.awt.Font("Comic Sans MS", 1, 20)); // NOI18N
+        lblWelcome.setForeground(new java.awt.Color(255, 255, 255));
+        lblWelcome.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblWelcome.setText("Disc Stock");
 
         jPanel2.setBackground(new java.awt.Color(0, 153, 153));
 
@@ -118,34 +130,24 @@ public class FrmMain extends javax.swing.JFrame {
         lblNext.setForeground(new java.awt.Color(255, 255, 255));
         lblNext.setText(">");
         lblNext.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        lblNext.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblNextMouseClicked(evt);
+            }
+        });
 
         lblPrevius.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblPrevius.setForeground(new java.awt.Color(255, 255, 255));
         lblPrevius.setText("<");
         lblPrevius.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        lblPrevius.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblPreviusMouseClicked(evt);
+            }
+        });
 
         pResult.setBackground(new java.awt.Color(0, 102, 102));
         pResult.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-
-        lblDisc1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-
-        lblDisc6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-
-        lblDisc7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-
-        lblDisc2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-
-        lblDisc3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-
-        lblDisc8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-
-        lblDisc4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-
-        lblDisc9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-
-        lblDisc5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-
-        lblDisc0.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
 
         lblName2.setFont(new java.awt.Font("Comic Sans MS", 1, 11)); // NOI18N
         lblName2.setForeground(new java.awt.Color(255, 255, 255));
@@ -359,7 +361,7 @@ public class FrmMain extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblWelcome, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(216, 216, 216)
                 .addComponent(lblShoppingCar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27))
@@ -369,7 +371,7 @@ public class FrmMain extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblWelcome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblShoppingCar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -398,8 +400,13 @@ public class FrmMain extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMusicActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        FrmLogin oLogin = new FrmLogin(this, true);
-        oLogin.setVisible(true);
+        if (btnLogin.getText().equals("Log In")) {
+            FrmLogin oLogin = new FrmLogin(this, true);
+            oLogin.setVisible(true);
+        }else{
+            FrmMain oMain = new FrmMain();
+            oMain.setVisible(true);
+        }
         this.dispose();
     }//GEN-LAST:event_btnLoginActionPerformed
 
@@ -407,6 +414,26 @@ public class FrmMain extends javax.swing.JFrame {
         FrmMyWishes oMyWishes = new FrmMyWishes(this, true);
         oMyWishes.setVisible(true);
     }//GEN-LAST:event_lblShoppingCarMouseClicked
+
+    private void lblNextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNextMouseClicked
+        minActual = maxActual+1;
+        maxActual = maxActual+10;
+        if (btnMusic.isSelected()) {
+            viewMusic();
+        }else{
+            viewMovies();
+        }
+    }//GEN-LAST:event_lblNextMouseClicked
+
+    private void lblPreviusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPreviusMouseClicked
+        minActual = maxActual-10;
+        maxActual = maxActual-10;
+        if (btnMusic.isSelected()) {
+            viewMusic();
+        }else{
+            viewMovies();
+        }
+    }//GEN-LAST:event_lblPreviusMouseClicked
 
     /**
      * @param args the command line arguments
@@ -449,7 +476,6 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JToggleButton btnMusic;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -476,16 +502,40 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JLabel lblNext;
     private javax.swing.JLabel lblPrevius;
     private javax.swing.JLabel lblShoppingCar;
+    private javax.swing.JLabel lblWelcome;
     private javax.swing.JPanel pMain;
     private javax.swing.JPanel pResult;
     // End of variables declaration//GEN-END:variables
 
     private void viewMovies() {
-        Controller.Movie m = new Movie();
-        LinkedList<Model.Disc> dMovies = m.select();
-        for (int i = 0; i < 9; i++) {
-            JLabel l = getDisc(i+1);
-            l.setIcon(setImage("", WIDTH, HEIGHT));
+        try {
+            Controller.Movie m = new Movie();
+            LinkedList<Model.Disc> dMovies = m.select();
+            
+            for (int i = minActual; i < maxActual; i++) {
+                this.actualDiscs.add(dMovies.get(i));
+                JLabel l = getDisc(i + 1);
+                l.setIcon(setImage("shopping_car.png", l.getWidth(), l.getHeight()));
+                l = getNameLabel(i+1);
+                l.setText(dMovies.get(i).getName());
+            }
+        } catch (Exception e) {
+        }
+    }
+    
+    private void viewMusic(){
+        try {
+            Controller.Music m = new Controller.Music();
+            LinkedList<Model.Disc> dMusic = m.select();
+            
+            for (int i = minActual; i < maxActual; i++) {
+                this.actualDiscs.add(dMusic.get(i));
+                JLabel l = getDisc(i + 1);
+                l.setIcon(setImage("shopping_car.png", l.getWidth(), l.getHeight()));
+                l = getNameLabel(i+1);
+                l.setText(dMusic.get(i).getName());
+            }
+        } catch (Exception e) {
         }
     }
 
@@ -514,8 +564,8 @@ public class FrmMain extends javax.swing.JFrame {
         }
         return null;
     }
-    
-    private JLabel getNameLabel(int num){
+
+    private JLabel getNameLabel(int num) {
         switch (num) {
             case 9:
                 return this.lblName0;
