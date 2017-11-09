@@ -45,15 +45,14 @@ public class FrmMain extends javax.swing.JFrame {
 
     private void load() {
         try {
-            try {
-                lblWelcome.setText("Welcome back " + loguedUser.getName());
-                btnLogin.setText("Log out");
-            } catch (Exception e) {
-            }
-            String url = "C:\\Users\\pc\\Desktop\\FirstProjectSecondCourse\\FirstProjectSecondCourse\\src\\images\\shopping_car.png";
+            btnMovies.setSelected(true);
+            lblWelcome.setText("Welcome back " + loguedUser.getName());
+            btnLogin.setText("Log out");
+            String url = "shopping_car.png";
             lblShoppingCar.setIcon(setImage(url, lblShoppingCar.getWidth(), lblShoppingCar.getHeight()));
             viewMovies();
         } catch (Exception e) {
+            lblWelcome.setText("Enter your account to use me");
         }
     }
 
@@ -392,18 +391,22 @@ public class FrmMain extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMoviesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoviesActionPerformed
-
+        if (loguedUser!=null) {
+            viewMovies();
+        }
     }//GEN-LAST:event_btnMoviesActionPerformed
 
     private void btnMusicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMusicActionPerformed
-
+        if (loguedUser!=null) {
+            viewMusic();
+        }
     }//GEN-LAST:event_btnMusicActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         if (btnLogin.getText().equals("Log In")) {
             FrmLogin oLogin = new FrmLogin(this, true);
             oLogin.setVisible(true);
-        }else{
+        } else {
             FrmMain oMain = new FrmMain();
             oMain.setVisible(true);
         }
@@ -416,21 +419,21 @@ public class FrmMain extends javax.swing.JFrame {
     }//GEN-LAST:event_lblShoppingCarMouseClicked
 
     private void lblNextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNextMouseClicked
-        minActual = maxActual+1;
-        maxActual = maxActual+10;
+        minActual = maxActual + 1;
+        maxActual = maxActual + 10;
         if (btnMusic.isSelected()) {
             viewMusic();
-        }else{
+        } else {
             viewMovies();
         }
     }//GEN-LAST:event_lblNextMouseClicked
 
     private void lblPreviusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPreviusMouseClicked
-        minActual = maxActual-10;
-        maxActual = maxActual-10;
+        minActual = maxActual - 10;
+        maxActual = maxActual - 10;
         if (btnMusic.isSelected()) {
             viewMusic();
-        }else{
+        } else {
             viewMovies();
         }
     }//GEN-LAST:event_lblPreviusMouseClicked
@@ -508,31 +511,35 @@ public class FrmMain extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void viewMovies() {
+        clean();
         try {
             Controller.Movie m = new Movie();
             LinkedList<Model.Disc> dMovies = m.select();
-            
-            for (int i = minActual; i < maxActual; i++) {
-                this.actualDiscs.add(dMovies.get(i));
-                JLabel l = getDisc(i + 1);
-                l.setIcon(setImage("shopping_car.png", l.getWidth(), l.getHeight()));
-                l = getNameLabel(i+1);
+            actualDiscs = new LinkedList<>();
+
+            for (int i = 0; i < 10; i++) {
+                this.actualDiscs.add(dMovies.get(minActual + i));
+                JLabel l = getDisc(i);
+                l.setIcon(setImage("disc.png", l.getWidth(), l.getHeight()));
+                l = getNameLabel(i);
                 l.setText(dMovies.get(i).getName());
             }
         } catch (Exception e) {
         }
     }
-    
-    private void viewMusic(){
+
+    private void viewMusic() {
+        clean();
         try {
             Controller.Music m = new Controller.Music();
             LinkedList<Model.Disc> dMusic = m.select();
-            
-            for (int i = minActual; i < maxActual; i++) {
-                this.actualDiscs.add(dMusic.get(i));
-                JLabel l = getDisc(i + 1);
-                l.setIcon(setImage("shopping_car.png", l.getWidth(), l.getHeight()));
-                l = getNameLabel(i+1);
+            actualDiscs = new LinkedList<>();
+
+            for (int i = 0; i < 10; i++) {
+                this.actualDiscs.add(dMusic.get(minActual + i));
+                JLabel l = getDisc(i);
+                l.setIcon(setImage("disc.png", l.getWidth(), l.getHeight()));
+                l = getNameLabel(i);
                 l.setText(dMusic.get(i).getName());
             }
         } catch (Exception e) {
@@ -541,52 +548,52 @@ public class FrmMain extends javax.swing.JFrame {
 
     private JLabel getDisc(int num) {
         switch (num) {
+            case 0:
+                return this.lblDisc1;
+            case 1:
+                return this.lblDisc2;
+            case 2:
+                return this.lblDisc3;
+            case 3:
+                return this.lblDisc4;
+            case 4:
+                return this.lblDisc5;
+            case 5:
+                return this.lblDisc6;
+            case 6:
+                return this.lblDisc7;
+            case 7:
+                return this.lblDisc8;
+            case 8:
+                return this.lblDisc9;
             case 9:
                 return this.lblDisc0;
-            case 1:
-                return this.lblDisc1;
-            case 2:
-                return this.lblDisc2;
-            case 3:
-                return this.lblDisc3;
-            case 4:
-                return this.lblDisc4;
-            case 5:
-                return this.lblDisc5;
-            case 6:
-                return this.lblDisc6;
-            case 7:
-                return this.lblDisc7;
-            case 8:
-                return this.lblDisc8;
-            case 0:
-                return this.lblDisc9;
         }
         return null;
     }
 
     private JLabel getNameLabel(int num) {
         switch (num) {
+            case 0:
+                return this.lblName1;
+            case 1:
+                return this.lblName2;
+            case 2:
+                return this.lblName3;
+            case 3:
+                return this.lblNam4;
+            case 4:
+                return this.lblName5;
+            case 5:
+                return this.lblName6;
+            case 6:
+                return this.lblName7;
+            case 7:
+                return this.lblName8;
+            case 8:
+                return this.lblName9;
             case 9:
                 return this.lblName0;
-            case 1:
-                return this.lblName1;
-            case 2:
-                return this.lblName2;
-            case 3:
-                return this.lblName3;
-            case 4:
-                return this.lblNam4;
-            case 5:
-                return this.lblName5;
-            case 6:
-                return this.lblName6;
-            case 7:
-                return this.lblName7;
-            case 8:
-                return this.lblName8;
-            case 0:
-                return this.lblName9;
         }
         return null;
     }
@@ -597,5 +604,14 @@ public class FrmMain extends javax.swing.JFrame {
         Image newimg = img.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
         icon = new ImageIcon(newimg);
         return icon;
+    }
+
+    private void clean() {
+        for (int i = 0; i < 10; i++) {
+            JLabel l = getDisc(i);
+            l.setIcon(null);
+            l = getNameLabel(i);
+            l.setText("");
+        }
     }
 }
