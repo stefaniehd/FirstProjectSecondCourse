@@ -5,7 +5,11 @@
  */
 package Model;
 
+import Util.Email;
 import Util.FileManager;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 
 /**
@@ -22,66 +26,107 @@ public class Disc {
     private double price;
     private int cant;
     private FileManager fileManager;
-    
+
     public Disc() {
         fileManager = new FileManager();
     }
-    
+
     /**
-     * 
+     *
      */
-    public void buy(){
+    public void buy(Model.User u, int cant) {
         try {
-            String movies = fileManager.read("purchase.txt");
-            movies += this.getId() + ";" + this.getType() + ";" + this.getName() + ";" + this.getAutor() + ";"
-                    + this.getCategory() + ";" + this.getPrice() + ";" + this.getCant();
-            this.fileManager.write("purchase.txt", movies);
+            String purchase = fileManager.read("purchase.txt");
+            purchase += u.getName() + ";" + u.getId() + ";" + u.getEmail() + ";" + this.getName() + ";" + cant + ";" + getDate();
+            this.fileManager.write("purchase.txt", purchase);
+            updateCant(cant);
+            sendEmail(u);
         } catch (Exception ex) {
         }
     }
     
+    private void sendEmail(Model.User u){
+        Util.Email e = new Email();
+        e.setMessage("Hi " + u.getName() + "\nWe are proud of you, and we want to give you a great expirience here."
+                + "\n\nSo we let you know that your purchase was succesfully\nYou bougth the disc called " + this.getName() +
+                "\nHave a nice day and enjoy your new disc");
+        e.setEmailtTo(u.getEmail());
+        e.setSubject("New Disc");
+        e.send();
+    }
+
+    private String getDate() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
+
+    private void updateCant(int cant) {
+        String newMusic = "";
+        String[] music = fileManager.read("disc.txt").split("\n");
+        for (int i = 0; i < music.length; i++) {
+            String musicData[] = music[i].split(";");
+            if (!(musicData[0].equals(this.getId()))) {
+                newMusic += music[i];
+            } else {
+                musicData[musicData.length - 1] = String.valueOf(this.getCant() - cant);
+                for (int j = 0; j < musicData.length; j++) {
+                    newMusic += musicData[j];
+                    if (j != musicData.length - 1) {
+                        newMusic += ";";
+                    }
+                }
+            }
+            if (i != (music.length - 1)) {
+                newMusic += "\n";
+            }
+        }
+        fileManager.write("disc.txt", newMusic);
+    }
+
     /**
-     * 
+     *
      */
-    public void order(){
+    public void order(Model.User u, int cant) {
         try {
-            String movies = fileManager.read("oder.txt");
-            movies += this.getId() + ";" + this.getType() + ";" + this.getName() + ";" + this.getAutor() + ";"
-                    + this.getCategory() + ";" + this.getPrice() + ";" + this.getCant();
-            this.fileManager.write("order.txt", movies);
+            String purchase = fileManager.read("order.txt");
+            purchase += u.getName() + ";" + u.getId() + ";" + u.getEmail() + ";" + this.getName() + ";" + cant + ";" + getDate();
+            this.fileManager.write("order.txt", purchase);
+            updateCant(cant);
+            sendEmail(u);
         } catch (Exception ex) {
         }
     }
-    
+
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
-    public boolean add(){
+    public boolean add() {
         return true;
     }
-    
+
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
-    public boolean delete(){
+    public boolean delete() {
         return true;
     }
-    
+
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
-    public boolean update(){
+    public boolean update() {
         return true;
     }
-    
+
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
-    public LinkedList<Model.Disc> select(){
+    public LinkedList<Model.Disc> select() {
         return new LinkedList<>();
     }
 
@@ -140,6 +185,5 @@ public class Disc {
     public void setCant(int cant) {
         this.cant = cant;
     }
-    
-    
+
 }

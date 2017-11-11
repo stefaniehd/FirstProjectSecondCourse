@@ -5,13 +5,13 @@
  */
 package View;
 
+import Controller.Disc;
 import java.awt.Image;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import java.applet.AudioClip;
-import java.io.InputStream;
-import java.net.URL;
-        
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author pc
@@ -21,6 +21,8 @@ public class FrmDisc extends javax.swing.JDialog {
     private Model.User user;
     private Model.Disc disc;
     private DefaultListModel model;
+    private boolean playSong;
+    private AudioClip sonido;
 
     /**
      * Creates new form FrmDisc
@@ -29,6 +31,8 @@ public class FrmDisc extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
+        sonido = java.applet.Applet.newAudioClip(getClass().getResource("song.wav"));
+        this.playSong = true;
         model = new DefaultListModel();
         load();
     }
@@ -37,6 +41,8 @@ public class FrmDisc extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
+        sonido = java.applet.Applet.newAudioClip(getClass().getResource("song.wav"));
+        this.playSong = true;
         model = new DefaultListModel();
         this.user = user;
         this.disc = disc;
@@ -119,12 +125,23 @@ public class FrmDisc extends javax.swing.JDialog {
 
         btnBuy.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         btnBuy.setText("Buy");
+        btnBuy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuyActionPerformed(evt);
+            }
+        });
 
         btnOrder.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
         btnOrder.setText("Pre order");
+        btnOrder.setEnabled(false);
+        btnOrder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOrderActionPerformed(evt);
+            }
+        });
 
         btnPlay.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
-        btnPlay.setText("Play");
+        btnPlay.setText("Play/Stop");
         btnPlay.setEnabled(false);
         btnPlay.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -197,7 +214,7 @@ public class FrmDisc extends javax.swing.JDialog {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnPlay)))
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
                     .addGap(118, 118, 118)
@@ -276,6 +293,14 @@ public class FrmDisc extends javax.swing.JDialog {
         playSong();
     }//GEN-LAST:event_btnPlayActionPerformed
 
+    private void btnBuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuyActionPerformed
+        buy();
+    }//GEN-LAST:event_btnBuyActionPerformed
+
+    private void btnOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrderActionPerformed
+        preOrder();
+    }//GEN-LAST:event_btnOrderActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -342,14 +367,26 @@ public class FrmDisc extends javax.swing.JDialog {
 
     private void playSong() {
         try {
-            AudioClip sonido = java.applet.Applet.newAudioClip(getClass().getResource("song.wav"));
-            sonido.play();
+            if (playSong) {
+                sonido.play();
+                playSong = false;
+            } else {
+                sonido.stop();
+                playSong = true;
+            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
     private void load() {
+        if (this.disc.getCant() == 0) {
+            btnOrder.setEnabled(true);
+            btnPlay.setEnabled(false);
+        } else {
+            btnOrder.setEnabled(false);
+            btnPlay.setEnabled(true);
+        }
         try {
             lblUser.setText("User: " + user.getName());
             if (disc.getType().equals("movie")) {
@@ -384,5 +421,22 @@ public class FrmDisc extends javax.swing.JDialog {
         Double total = disc.getPrice();
         total *= Integer.parseInt(sCant.getValue().toString());
         txtTotal.setText(total.toString());
+    }
+
+    private void buy() {
+        int cant = Integer.parseInt(sCant.getValue().toString());
+        if (this.disc.getCant() > cant) {
+            Controller.Disc d = new Disc(disc);
+            d.buy(user, cant);
+        }else{
+            JOptionPane.showMessageDialog(null, "In this moment there aren't the amount you\n"
+                    + "but you can buy less or pre order");
+        }
+    }
+
+    private void preOrder() {
+        int cant = Integer.parseInt(sCant.getValue().toString());
+        Controller.Disc d = new Disc(disc);
+        d.order(user, cant);
     }
 }

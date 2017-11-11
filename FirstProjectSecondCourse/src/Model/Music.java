@@ -31,9 +31,13 @@ public class Music extends Model.Disc {
     public boolean add() {
         try {
             String music = fileManager.read(fileName);
-            music += this.getId() + ";" + this.getType() + ";" + this.getName() + ";" + this.getAutor() + ";"
+            if (music.isEmpty()) {
+                music = this.getId() + ";" + this.getType() + ";" + this.getName() + ";" + this.getAutor() + ";"
                     + this.getCategory() + ";" + this.getPrice() + ";" + getSongList(song) + ";" + this.getCant();
-            ;
+            }else{
+                music += this.getId() + ";" + this.getType() + ";" + this.getName() + ";" + this.getAutor() + ";"
+                    + this.getCategory() + ";" + this.getPrice() + ";" + getSongList(song) + ";" + this.getCant();
+            }
             this.fileManager.write(fileName, music);
             return true;
         } catch (Exception ex) {

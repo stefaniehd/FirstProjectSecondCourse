@@ -13,7 +13,14 @@ import java.util.LinkedList;
  */
 public class Disc {
     
+    private Model.Disc disc;
+    
     public Disc() {
+        disc = new Model.Disc();
+    }
+
+    public Disc(Model.Disc disc) {
+        this.disc = disc;
     }
     
     public boolean add(){
@@ -30,5 +37,13 @@ public class Disc {
     
     public boolean delete(){
         return true;
+    }
+    
+    public void buy(Model.User u, int cant){
+        disc.buy(u, cant);
+    }
+    
+    public void order(Model.User u, int cant){
+        disc.order(u, cant);
     }
 }

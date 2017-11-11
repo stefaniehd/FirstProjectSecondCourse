@@ -30,8 +30,13 @@ public class Movie extends Model.Disc {
     public boolean add() {
         try {
             String movies = fileManager.read(fileName);
-            movies += this.getId() + ";" + this.getType() + ";" + this.getName() + ";" + this.getAutor() + ";"
+            if (movies.isEmpty()) {
+                movies = this.getId() + ";" + this.getType() + ";" + this.getName() + ";" + this.getAutor() + ";"
                     + this.getCategory() + ";" + this.getPrice() + ";" + this.getCant();
+            }else{
+                movies += this.getId() + ";" + this.getType() + ";" + this.getName() + ";" + this.getAutor() + ";"
+                    + this.getCategory() + ";" + this.getPrice() + ";" + this.getCant();
+            }
             this.fileManager.write(fileName, movies);
             return true;
         } catch (Exception ex) {
