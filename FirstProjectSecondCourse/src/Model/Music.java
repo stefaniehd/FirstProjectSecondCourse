@@ -20,7 +20,7 @@ public class Music extends Model.Disc {
 
     public Music() {
         fileManager = new FileManager();
-        fileName = "music.txt";
+        fileName = "disc.txt";
     }
 
     /**
@@ -31,13 +31,10 @@ public class Music extends Model.Disc {
     public boolean add() {
         try {
             String music = fileManager.read(fileName);
-            if (music.length() > 0) {
-                music += "\n";
-            }
-            music += this.getId() + ";" + this.getName() + ";" + this.getAutor() + ";"
-                    + this.getCategory() + ";" + this.getPrice() + ";" + getSongList(song) + ";" + this.getCant()
-                    +";"+ this.getType();
-;            this.fileManager.write(fileName, music);
+            music += this.getId() + ";" + this.getType() + ";" + this.getName() + ";" + this.getAutor() + ";"
+                    + this.getCategory() + ";" + this.getPrice() + ";" + getSongList(song) + ";" + this.getCant();
+            ;
+            this.fileManager.write(fileName, music);
             return true;
         } catch (Exception ex) {
             return false;
@@ -56,7 +53,7 @@ public class Music extends Model.Disc {
             for (int i = 0; i < music.length; i++) {
                 String musicData[] = music[i].split(";");
                 if (!(musicData[0].equals(this.getId()))) {
-                    newMusic += musicData[i];
+                    newMusic += music[i];
                 }
                 if (i != (music.length - 1)) {
                     newMusic += "\n";
@@ -80,15 +77,18 @@ public class Music extends Model.Disc {
             LinkedList<Model.Disc> movieList = new LinkedList<>();
             for (int i = 0; i < music.length; i++) {
                 String[] musicData = music[i].split(";");
-                Model.Music m = new Music();
-                m.setId(musicData[0]);
-                m.setName(musicData[1]);
-                m.setAutor(musicData[2]);
-                m.setCategory(musicData[3]);
-                m.setPrice(Integer.parseInt(musicData[4]));
-                m.setSong(createSongList(musicData[5]));
-                m.setCant(Integer.parseInt(musicData[6]));
-                movieList.add(m);
+                if (musicData.length > 7) {
+                    Model.Music m = new Music();
+                    m.setId(musicData[0]);
+                    m.setType(musicData[1]);
+                    m.setName(musicData[2]);
+                    m.setAutor(musicData[3]);
+                    m.setCategory(musicData[4]);
+                    m.setPrice(Double.parseDouble(musicData[5]));
+                    m.setSong(createSongList(musicData[6]));
+                    m.setCant(Integer.parseInt(musicData[7]));
+                    movieList.add(m);
+                }
             }
             return movieList;
         } catch (Exception e) {
@@ -108,14 +108,14 @@ public class Music extends Model.Disc {
             for (int i = 0; i < music.length; i++) {
                 String musicData[] = music[i].split(";");
                 if (!(musicData[0].equals(this.getId()))) {
-                    newMusic += musicData[i];
+                    newMusic += music[i];
                     if (i != (music.length - 1)) {
                         newMusic += "\n";
                     }
                 } else {
-                    newMusic += this.getId() + ";" + this.getName() + ";" + this.getAutor() + ";"
-                            + this.getCategory() + ";" + this.getPrice() + ";" + this.getSongList(song) 
-                            +";" + this.getCant()+";"+ this.getType();;
+                    newMusic += this.getId() + ";" + this.getType() + ";" + this.getName() + ";" + this.getAutor() + ";"
+                            + this.getCategory() + ";" + this.getPrice() + ";" + this.getSongList(song)
+                            + ";" + this.getCant();
                 }
             }
             fileManager.write(fileName, newMusic);
@@ -140,7 +140,7 @@ public class Music extends Model.Disc {
         for (int i = 0; i < songs.size(); i++) {
             result += songs.get(i);
             if (i != (songs.size() - 1)) {
-                result += "\n";
+                result += ",";
             }
         }
         return result;

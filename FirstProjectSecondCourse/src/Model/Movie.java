@@ -30,11 +30,8 @@ public class Movie extends Model.Disc {
     public boolean add() {
         try {
             String movies = fileManager.read(fileName);
-            if (movies.length() > 0) {
-                movies += "\n";
-            }
-            movies += this.getId() + ";" + this.getName() + ";" + this.getAutor() + ";"
-                    + this.getCategory() + ";" + this.getPrice() + ";" + this.getCant()+";"+ this.getType();;
+            movies += this.getId() + ";" + this.getType() + ";" + this.getName() + ";" + this.getAutor() + ";"
+                    + this.getCategory() + ";" + this.getPrice() + ";" + this.getCant();
             this.fileManager.write(fileName, movies);
             return true;
         } catch (Exception ex) {
@@ -54,7 +51,7 @@ public class Movie extends Model.Disc {
             for (int i = 0; i < movies.length; i++) {
                 String movieData[] = movies[i].split(";");
                 if (!(movieData[0].equals(this.getId()))) {
-                    newMovies += movieData[i];
+                    newMovies += movies[i];
                 }
                 if (i != (movies.length - 1)) {
                     newMovies += "\n";
@@ -79,13 +76,16 @@ public class Movie extends Model.Disc {
             for (int i = 0; i < movies.length; i++) {
                 String[] moviesData = movies[i].split(";");
                 Model.Movie m = new Movie();
-                m.setId(moviesData[0]);
-                m.setName(moviesData[1]);
-                m.setAutor(moviesData[2]);
-                m.setCategory(moviesData[3]);
-                m.setPrice(Integer.parseInt(moviesData[4]));
-                m.setCant(Integer.parseInt(moviesData[5]));
-                movieList.add(m);
+                if (moviesData[1].equals("movie")) {
+                    m.setId(moviesData[0]);
+                    m.setType(moviesData[1]);
+                    m.setName(moviesData[2]);
+                    m.setAutor(moviesData[3]);
+                    m.setCategory(moviesData[4]);
+                    m.setPrice(Double.parseDouble(moviesData[5]));
+                    m.setCant(Integer.parseInt(moviesData[6]));
+                    movieList.add(m);
+                }
             }
             return movieList;
         } catch (Exception e) {
@@ -105,13 +105,13 @@ public class Movie extends Model.Disc {
             for (int i = 0; i < movies.length; i++) {
                 String movieData[] = movies[i].split(";");
                 if (!(movieData[0].equals(this.getId()))) {
-                    newMovies += movieData[i];
-                    if (i != (movies.length - 1)) {
-                        newMovies += "\n";
-                    }
+                    newMovies += movies[i];
                 } else {
-                    newMovies += this.getId() + ";" + this.getName() + ";" + this.getAutor() + ";"
-                            + this.getCategory() + ";" + this.getPrice() + ";" + this.getCant()+";"+ this.getType();;
+                    newMovies += this.getId() + ";" + this.getType() + ";" + this.getName() + ";" + this.getAutor() + ";"
+                            + this.getCategory() + ";" + this.getPrice() + ";" + this.getCant();
+                }
+                if (i != (movies.length - 1)) {
+                    newMovies += "\n";
                 }
             }
             fileManager.write(fileName, newMovies);

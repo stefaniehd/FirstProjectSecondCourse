@@ -151,42 +151,92 @@ public class FrmMain extends javax.swing.JFrame {
         lblName2.setFont(new java.awt.Font("Comic Sans MS", 1, 11)); // NOI18N
         lblName2.setForeground(new java.awt.Color(255, 255, 255));
         lblName2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblName2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblName2MouseClicked(evt);
+            }
+        });
 
         lblName1.setFont(new java.awt.Font("Comic Sans MS", 1, 11)); // NOI18N
         lblName1.setForeground(new java.awt.Color(255, 255, 255));
         lblName1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblName1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblName1MouseClicked(evt);
+            }
+        });
 
         lblName3.setFont(new java.awt.Font("Comic Sans MS", 1, 11)); // NOI18N
         lblName3.setForeground(new java.awt.Color(255, 255, 255));
         lblName3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblName3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblName3MouseClicked(evt);
+            }
+        });
 
         lblName5.setFont(new java.awt.Font("Comic Sans MS", 1, 11)); // NOI18N
         lblName5.setForeground(new java.awt.Color(255, 255, 255));
         lblName5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblName5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblName5MouseClicked(evt);
+            }
+        });
 
         lblName6.setFont(new java.awt.Font("Comic Sans MS", 1, 11)); // NOI18N
         lblName6.setForeground(new java.awt.Color(255, 255, 255));
         lblName6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblName6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblName6MouseClicked(evt);
+            }
+        });
 
         lblName7.setFont(new java.awt.Font("Comic Sans MS", 1, 11)); // NOI18N
         lblName7.setForeground(new java.awt.Color(255, 255, 255));
         lblName7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblName7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblName7MouseClicked(evt);
+            }
+        });
 
         lblName9.setFont(new java.awt.Font("Comic Sans MS", 1, 11)); // NOI18N
         lblName9.setForeground(new java.awt.Color(255, 255, 255));
         lblName9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblName9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblName9MouseClicked(evt);
+            }
+        });
 
         lblName0.setFont(new java.awt.Font("Comic Sans MS", 1, 11)); // NOI18N
         lblName0.setForeground(new java.awt.Color(255, 255, 255));
         lblName0.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblName0.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblName0MouseClicked(evt);
+            }
+        });
 
         lblName8.setFont(new java.awt.Font("Comic Sans MS", 1, 11)); // NOI18N
         lblName8.setForeground(new java.awt.Color(255, 255, 255));
         lblName8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblName8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblName8MouseClicked(evt);
+            }
+        });
 
         lblNam4.setFont(new java.awt.Font("Comic Sans MS", 1, 11)); // NOI18N
         lblNam4.setForeground(new java.awt.Color(255, 255, 255));
         lblNam4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblNam4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblNam4MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout pResultLayout = new javax.swing.GroupLayout(pResult);
         pResult.setLayout(pResultLayout);
@@ -438,6 +488,46 @@ public class FrmMain extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_lblPreviusMouseClicked
 
+    private void lblName1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblName1MouseClicked
+        viewDisc(0);
+    }//GEN-LAST:event_lblName1MouseClicked
+
+    private void lblName2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblName2MouseClicked
+        viewDisc(1);
+    }//GEN-LAST:event_lblName2MouseClicked
+
+    private void lblName3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblName3MouseClicked
+        viewDisc(2);
+    }//GEN-LAST:event_lblName3MouseClicked
+
+    private void lblNam4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNam4MouseClicked
+        viewDisc(3);
+    }//GEN-LAST:event_lblNam4MouseClicked
+
+    private void lblName5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblName5MouseClicked
+        viewDisc(4);
+    }//GEN-LAST:event_lblName5MouseClicked
+
+    private void lblName6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblName6MouseClicked
+        viewDisc(5);
+    }//GEN-LAST:event_lblName6MouseClicked
+
+    private void lblName7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblName7MouseClicked
+        viewDisc(6);
+    }//GEN-LAST:event_lblName7MouseClicked
+
+    private void lblName8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblName8MouseClicked
+        viewDisc(7);
+    }//GEN-LAST:event_lblName8MouseClicked
+
+    private void lblName9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblName9MouseClicked
+        viewDisc(8);
+    }//GEN-LAST:event_lblName9MouseClicked
+
+    private void lblName0MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblName0MouseClicked
+        viewDisc(9);
+    }//GEN-LAST:event_lblName0MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -613,5 +703,10 @@ public class FrmMain extends javax.swing.JFrame {
             l = getNameLabel(i);
             l.setText("");
         }
+    }
+
+    private void viewDisc(int select) {
+        FrmDisc oDisc = new FrmDisc(this, true, loguedUser, actualDiscs.get(select));
+        oDisc.setVisible(true);
     }
 }

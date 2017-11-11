@@ -5,6 +5,7 @@
  */
 package Model;
 
+import Util.FileManager;
 import java.util.LinkedList;
 
 /**
@@ -20,8 +21,36 @@ public class Disc {
     private String category;
     private double price;
     private int cant;
+    private FileManager fileManager;
     
     public Disc() {
+        fileManager = new FileManager();
+    }
+    
+    /**
+     * 
+     */
+    public void buy(){
+        try {
+            String movies = fileManager.read("purchase.txt");
+            movies += this.getId() + ";" + this.getType() + ";" + this.getName() + ";" + this.getAutor() + ";"
+                    + this.getCategory() + ";" + this.getPrice() + ";" + this.getCant();
+            this.fileManager.write("purchase.txt", movies);
+        } catch (Exception ex) {
+        }
+    }
+    
+    /**
+     * 
+     */
+    public void order(){
+        try {
+            String movies = fileManager.read("oder.txt");
+            movies += this.getId() + ";" + this.getType() + ";" + this.getName() + ";" + this.getAutor() + ";"
+                    + this.getCategory() + ";" + this.getPrice() + ";" + this.getCant();
+            this.fileManager.write("order.txt", movies);
+        } catch (Exception ex) {
+        }
     }
     
     /**

@@ -452,12 +452,11 @@ public class FrmMoviesMaintenance extends javax.swing.JDialog {
             m.setName(txtName.getText());
             m.setPrice(Double.parseDouble(txtPrice.getText()));
             m.setType("movie");
-            if ("".equals(code) || code == null) {
                 Controller.Movie movie = new Movie(m);
+            if ("".equals(code) || code == null) {
                 movie.add();
             } else {
                 m.setId(code);
-                Controller.Movie movie = new Movie(m);
                 movie.update();
             }
             refresh();

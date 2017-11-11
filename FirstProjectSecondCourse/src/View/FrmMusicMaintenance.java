@@ -6,6 +6,7 @@
 package View;
 
 import Controller.Music;
+import Util.Code;
 import Util.MusicTypes;
 import java.util.LinkedList;
 import javax.swing.DefaultComboBoxModel;
@@ -389,7 +390,7 @@ public class FrmMusicMaintenance extends javax.swing.JDialog {
     }//GEN-LAST:event_btnRefreshActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        // TODO add your handling code here:
+        save();
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnSave1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSave1ActionPerformed
@@ -444,6 +445,25 @@ public class FrmMusicMaintenance extends javax.swing.JDialog {
             }
         });
     }
+    
+    private void save(){
+        Model.Music music = new Model.Music();
+        music.setAutor(txtAuthor.getText());
+        music.setCant(Integer.parseInt(sAmount.getValue().toString()));
+        music.setCategory(cmbTypes.getSelectedItem().toString());
+        music.setId(Code.getCode());
+        music.setName(txtName.getText());
+        music.setPrice(Double.parseDouble(txtPrice.getText()));
+        LinkedList<String> songs = new LinkedList<>();
+        for (int i = 0; i < listModel.size(); i++) {
+            songs.add(listModel.get(i).toString());
+        }
+        music.setSong(songs);
+        music.setType("music");
+        Controller.Music m = new Controller.Music(music);
+        m.add();
+        refresh();
+    }
 
     private void load() {
         cmbTypes.setModel(new DefaultComboBoxModel(MusicTypes.values()));
@@ -454,14 +474,14 @@ public class FrmMusicMaintenance extends javax.swing.JDialog {
         try {
             Controller.Music m = new Music();
             LinkedList<Model.Disc> movies = m.select();
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < movies.size(); i++) {
                 Object[] data = new Object[7];
                 data[0] = movies.get(i).getId();
                 data[1] = movies.get(i).getName();
                 data[2] = movies.get(i).getAutor();
-                data[0] = movies.get(i).getCategory();
-                data[0] = movies.get(i).getCant();
-                data[0] = movies.get(i).getPrice();
+                data[3] = movies.get(i).getCategory();
+                data[4] = movies.get(i).getPrice();
+                data[5] = movies.get(i).getCant();
                 tableModel.addRow(data);
             }
             tMusic.setModel(tableModel);

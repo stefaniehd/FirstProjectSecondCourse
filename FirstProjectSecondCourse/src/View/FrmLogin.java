@@ -74,6 +74,7 @@ public class FrmLogin extends javax.swing.JDialog {
         txtUser.setFont(new java.awt.Font("Comic Sans MS", 1, 13)); // NOI18N
         txtUser.setForeground(new java.awt.Color(102, 102, 102));
         txtUser.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtUser.setText("tefahd");
         txtUser.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
 
         jLabel2.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
@@ -85,6 +86,7 @@ public class FrmLogin extends javax.swing.JDialog {
         jLabel3.setText("Password");
 
         txtPassword.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtPassword.setText("Tefa1234");
         txtPassword.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         btnDone.setBackground(new java.awt.Color(204, 102, 0));
@@ -248,7 +250,14 @@ public class FrmLogin extends javax.swing.JDialog {
         Controller.User oUser = new User();
         Model.User u = oUser.verifyLogin(txtUser.getText().trim(), txtPassword.getText().trim());
         if (u!=null) {
-            JOptionPane.showMessageDialog(this, "Welcome!");
+            if (u.getType().equals("admin")) {
+                FrmAdmin oAdmin = new FrmAdmin(u);
+                oAdmin.setVisible(true);
+            }else{
+                FrmMain oMain = new FrmMain(u);
+                oMain.setVisible(true);
+            }
+            this.dispose();
         }else{
             JOptionPane.showMessageDialog(this, "Wrong data!");
         }

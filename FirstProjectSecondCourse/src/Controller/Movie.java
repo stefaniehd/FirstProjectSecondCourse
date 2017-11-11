@@ -16,6 +16,7 @@ public class Movie extends Disc{
     private Model.Movie oMovie;
 
     public Movie() {
+        oMovie = new Model.Movie();
     }
 
     public Movie(Model.Movie oMovie) {
