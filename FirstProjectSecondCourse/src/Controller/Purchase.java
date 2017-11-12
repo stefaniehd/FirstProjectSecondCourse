@@ -17,6 +17,7 @@ public class Purchase {
     private Model.Purchase oPurchase;
     
     public Purchase() {
+        oPurchase = new Model.Purchase();
     }
 
     public Purchase(Model.Purchase oPurchase) {

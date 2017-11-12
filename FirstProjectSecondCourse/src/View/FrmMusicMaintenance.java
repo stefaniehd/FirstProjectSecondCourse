@@ -5,8 +5,10 @@
  */
 package View;
 
+import Controller.Disc;
 import Controller.Music;
 import Util.Code;
+import Util.FileManager;
 import Util.MusicTypes;
 import java.util.LinkedList;
 import javax.swing.DefaultComboBoxModel;
@@ -445,33 +447,52 @@ public class FrmMusicMaintenance extends javax.swing.JDialog {
             }
         });
     }
-    
-    private void save(){
-        Model.Music music = new Model.Music();
-        music.setAutor(txtAuthor.getText());
-        music.setCant(Integer.parseInt(sAmount.getValue().toString()));
-        music.setCategory(cmbTypes.getSelectedItem().toString());
-        music.setId(Code.getCode());
-        music.setName(txtName.getText());
-        music.setPrice(Double.parseDouble(txtPrice.getText()));
-        LinkedList<String> songs = new LinkedList<>();
-        for (int i = 0; i < listModel.size(); i++) {
-            songs.add(listModel.get(i).toString());
+
+    private void save() {
+        try {
+
+            Model.Music music = new Model.Music();
+            music.setAutor(txtAuthor.getText());
+            music.setCant(Integer.parseInt(sAmount.getValue().toString()));
+            music.setCategory(cmbTypes.getSelectedItem().toString());
+            music.setId(Code.getCode());
+            music.setName(txtName.getText());
+            music.setPrice(Double.parseDouble(txtPrice.getText()));
+            LinkedList<String> songs = new LinkedList<>();
+            for (int i = 0; i < listModel.size(); i++) {
+                songs.add(listModel.get(i).toString());
+            }
+            music.setSong(songs);
+            music.setType("music");
+            Controller.Music m = new Controller.Music(music);
+            m.add();
+            refresh();
+        } catch (Exception e) {
         }
-        music.setSong(songs);
-        music.setType("music");
-        Controller.Music m = new Controller.Music(music);
-        m.add();
-        refresh();
+    }
+
+    private void orders() {
+        FileManager file = new FileManager();
+        Controller.Disc d = new Disc();
+        LinkedList<Model.Disc> disc = d.select();
+        String[] orders = file.read("order.txt").split("\n");
+
     }
 
     private void load() {
         cmbTypes.setModel(new DefaultComboBoxModel(MusicTypes.values()));
         refresh();
     }
-    
-    private void refresh(){
+
+    private void refresh() {
         try {
+            try {
+                for (int i = tableModel.getRowCount() - 1; i >= 0; i++) {
+                    tableModel.removeRow(i);
+                }
+
+            } catch (Exception e) {
+            }
             Controller.Music m = new Music();
             LinkedList<Model.Disc> movies = m.select();
             for (int i = 0; i < movies.size(); i++) {

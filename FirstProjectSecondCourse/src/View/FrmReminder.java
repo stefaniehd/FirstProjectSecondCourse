@@ -5,6 +5,11 @@
  */
 package View;
 
+import Controller.User;
+import Util.Email;
+import java.util.LinkedList;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author pc
@@ -33,7 +38,7 @@ public class FrmReminder extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtEmail = new javax.swing.JTextField();
         btnDone = new javax.swing.JButton();
         lblMessage = new javax.swing.JLabel();
 
@@ -69,15 +74,20 @@ public class FrmReminder extends javax.swing.JDialog {
         jLabel2.setForeground(new java.awt.Color(0, 102, 102));
         jLabel2.setText("Please, insert your email address in the next field");
 
-        jTextField1.setFont(new java.awt.Font("Comic Sans MS", 1, 12)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(102, 102, 102));
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 153, 0)));
+        txtEmail.setFont(new java.awt.Font("Comic Sans MS", 1, 12)); // NOI18N
+        txtEmail.setForeground(new java.awt.Color(102, 102, 102));
+        txtEmail.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 153, 0)));
 
         btnDone.setBackground(new java.awt.Color(204, 102, 0));
         btnDone.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         btnDone.setForeground(new java.awt.Color(255, 255, 255));
         btnDone.setText("Done");
+        btnDone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDoneActionPerformed(evt);
+            }
+        });
 
         lblMessage.setFont(new java.awt.Font("Comic Sans MS", 0, 13)); // NOI18N
         lblMessage.setForeground(new java.awt.Color(153, 0, 0));
@@ -91,7 +101,7 @@ public class FrmReminder extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnDone, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jTextField1)
+                        .addComponent(txtEmail)
                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(21, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -105,7 +115,7 @@ public class FrmReminder extends javax.swing.JDialog {
                 .addGap(24, 24, 24)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnDone, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -130,6 +140,12 @@ public class FrmReminder extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnDoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoneActionPerformed
+        send();
+        JOptionPane.showMessageDialog(null, "We already sent your password");
+        this.dispose();
+    }//GEN-LAST:event_btnDoneActionPerformed
 
     /**
      * @param args the command line arguments
@@ -179,7 +195,21 @@ public class FrmReminder extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblMessage;
+    private javax.swing.JTextField txtEmail;
     // End of variables declaration//GEN-END:variables
+
+    private void send() {
+        Controller.User u = new User();
+        LinkedList<Model.User> users = u.select();
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getEmail().equals(txtEmail.getText().trim())) {
+                Util.Email e = new Email();
+                e.setEmailtTo(txtEmail.getText().trim());
+                e.setMessage("Hi " + users.get(i).getName() + "!\n"
+                        + "your password is: " + users.get(i).getPassword());
+                e.send();
+            }
+        }
+    }
 }

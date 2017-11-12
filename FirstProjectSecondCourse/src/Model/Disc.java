@@ -37,7 +37,8 @@ public class Disc {
     public void buy(Model.User u, int cant) {
         try {
             String purchase = fileManager.read("purchase.txt");
-            purchase += u.getName() + ";" + u.getId() + ";" + u.getEmail() + ";" + this.getName() + ";" + cant + ";" + getDate();
+            purchase += u.getName() + ";" + u.getId() + ";" + u.getEmail() + ";" + this.getName() + ";" + cant + ";" + getDate()
+                    +";"+this.getType()+";"+this.getCategory();
             this.fileManager.write("purchase.txt", purchase);
             updateCant(cant);
             sendEmail(u);
@@ -90,7 +91,8 @@ public class Disc {
     public void order(Model.User u, int cant) {
         try {
             String purchase = fileManager.read("order.txt");
-            purchase += u.getName() + ";" + u.getId() + ";" + u.getEmail() + ";" + this.getName() + ";" + cant + ";" + getDate();
+            purchase += u.getName() + ";" + u.getId() + ";" + u.getEmail() + ";" + this.getName() + ";" + cant + ";" 
+                    + getDate()+";"+this.getType()+";"+this.getCategory();
             this.fileManager.write("order.txt", purchase);
             updateCant(cant);
             sendEmail(u);

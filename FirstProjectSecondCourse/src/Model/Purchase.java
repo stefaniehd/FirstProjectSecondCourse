@@ -16,9 +16,14 @@ public class Purchase {
 
     private String id;
     private String purchaseNum;
-    private String user;
+    private String userName;
+    private String dni;
+    private String email;
     private String disc;
     private int cant;
+    private String date;
+    private String type;
+    private String category;
 
     private final FileManager fileManager;
     private final String fileName;
@@ -32,6 +37,48 @@ public class Purchase {
         return id;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    
     public void setId(String id) {
         this.id = id;
     }
@@ -44,12 +91,20 @@ public class Purchase {
         this.purchaseNum = purchaseNum;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+    
     public String getUser() {
-        return user;
+        return userName;
     }
 
     public void setUser(String user) {
-        this.user = user;
+        this.userName = user;
     }
 
     public String getDisc() {
@@ -74,7 +129,8 @@ public class Purchase {
             if (purchase.length() > 0) {
                 purchase += "\n";
             }
-            purchase += this.getId() + ";" + this.getUser() + ";" + this.getDisc() + ";" + this.getPurchaseNum();
+            purchase += this.getId() + ";" + this.getUser() + ";" + this.getDisc() + ";" + this.getPurchaseNum()
+                    +";"+this.getType()+";"+this.getCategory();
             this.fileManager.write(fileName, purchase);
             return true;
         } catch (Exception ex) {
@@ -117,10 +173,14 @@ public class Purchase {
             for (int i = 0; i < purchase.length; i++) {
                 String[] purchaseData = purchase[i].split(";");
                 Model.Purchase p = new Purchase();
-                p.setId(purchaseData[0]);
-                p.setUser(purchaseData[1]);
-                p.setDisc(purchaseData[2]);
-                p.setPurchaseNum(purchaseData[3]);
+                p.setUserName(purchaseData[0]);
+                p.setDni(purchaseData[1]);
+                p.setEmail(purchaseData[2]);
+                p.setDisc(purchaseData[3]);
+                p.setCant(Integer.parseInt(purchaseData[4]));
+                p.setDate(purchaseData[5]);
+                p.setType(purchaseData[6]);
+                p.setCategory(purchaseData[7]);
                 purchaselist.add(p);
             }
             return purchaselist;
